@@ -51,6 +51,7 @@
     <Compile Include="Abstract\IMiniAppInput.cs" />
     <Compile Include="Abstract\MiniAppBase.cs" />
     <Compile Include="Apps\AnotherApp.cs" />
+    <Compile Include="Apps\DuplicateIdApp.cs" />
     <Compile Include="Apps\FinalApp.cs" />
     <Compile Include="Apps\SampleApp.cs" />
     <Compile Include="Apps\ThirdApp.cs" />

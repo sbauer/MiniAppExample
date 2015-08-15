@@ -35,7 +35,26 @@ namespace MiniAppExample.ConsoleApp {
 
             if (selectedId == "q") return;
 
-            var selectedApp = apps.FirstOrDefault(x => x.AppId.ToString() == selectedId);
+            IMiniApp selectedApp;
+
+            var matchingApps = apps.Where(x => x.AppId.ToString() == selectedId).ToList();
+            if (matchingApps.Count() > 1)
+            {
+                Console.WriteLine("There are multiple apps with that Id.");
+                Console.WriteLine("Please select one from this list:");
+                int counter = 1;
+                var subList = (from matchingApp in matchingApps select new {Id = counter++, App = matchingApp}).ToList();
+                subList.ForEach(x =>
+                {
+                    Console.WriteLine($"{x.Id} - {x.App.AppName}");
+                });
+                selectedId = Console.ReadLine();
+                selectedApp = subList.FirstOrDefault(x => x.Id.ToString() == selectedId)?.App;
+            }
+            else
+            {
+                selectedApp = matchingApps.FirstOrDefault(x => x.AppId.ToString() == selectedId);
+            }
             if (selectedApp != null)
             {
                 var appToRun = Activator.CreateInstance(selectedApp.GetType()) as IMiniApp;
@@ -46,6 +65,7 @@ namespace MiniAppExample.ConsoleApp {
                 Console.WriteLine($"{selectedId} is not a valid input! Try again, or enter 'q' to quit.");
                 MainMenu();
             }
+            
         }
     }
 }
