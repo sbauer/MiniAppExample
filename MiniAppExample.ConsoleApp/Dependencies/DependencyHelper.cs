@@ -27,6 +27,7 @@ namespace MiniAppExample.ConsoleApp.Dependencies
                 .RegisterAssemblyTypes(AppDomain.CurrentDomain.GetAssemblies())
                 .Where(t => t.GetInterfaces().Any(i => i.IsAssignableFrom(typeof (IMiniApp))))
                 .AsImplementedInterfaces()
+                .Named<IMiniApp>(type=>type.Name)
                 .InstancePerDependency();
 
             return _container = builder.Build();

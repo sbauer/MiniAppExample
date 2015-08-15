@@ -57,8 +57,14 @@ namespace MiniAppExample.ConsoleApp {
             }
             if (selectedApp != null)
             {
-                var appToRun = Activator.CreateInstance(selectedApp.GetType()) as IMiniApp;
-                appToRun?.Execute(new MiniAppInput(MainMenu));
+                // OPTION 1 - Use existing app
+                // selectedApp.Execute(new MiniAppInput(MainMenu));
+
+                // OPTION 2 - Get a fresh instance [for whatever reason]
+
+                var freshInstance = container.ResolveNamed<IMiniApp>(selectedApp.GetType().Name);
+
+                freshInstance.Execute(new MiniAppInput(MainMenu));
             }
             else
             {
